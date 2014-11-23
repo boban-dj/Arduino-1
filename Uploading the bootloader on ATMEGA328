@@ -1,0 +1,45 @@
+First thing first, the items that I used.
+
+    Arduino board : Arduino Uno board
+    Microcontroller to be programmed : ATMEGA328 (to be standalone chip)
+    Operating System on computer : Ubuntu 14.04.1
+    IDE version : arduino 1:1.0.5+dfsg2-2
+    Sketch used 1 : Nick Gammon's arduino board detector sketch
+    Sketch used 2 : Nick Gammon's arduino board programmer sketch
+
+
+
+Steps That I did:
+
+I.Burn the bootloader
+
+1. I wired my standalone chip (ATMEGA328) as described in minimal wiring section of  Nick Gammon's forum
+
+2. Connected my Arduino and the breadboard as described in the Test the chip section of the page.
+
+3. Uploaded the latest version of the board detector sketch of Nick Gammon's.
+
+4. The output was not very good though. It said that my chip had an unrecognized signature.
+( Here again another problem cropped up, with the minimal wiring on the breadboard, I just had "Atmega chip detector" displayed on the serial monitor, nothing more. So I just tried inserting a 16 Mhz crystal in pins 9 and 10 on the breadboard along with 22 pF capacitors as shown again in the same page under "Chip not detected" section.)
+
+5. Now the output displayed in the serial monitor was different, but not good. It said the chip on the bread board had a unrecognised signature. It showed the signature to be "0x1e 0x95 0x14".
+
+6. I went ahead, Now I uploaded the latest atmega board programmer sketch (the one that I mentioned in my previous post was not recent, so It failed to compile)
+
+7. I wanted the Lilypad bootloader, so the necessary keyboard inputs were given appropriately through the serial monitor.
+('L')
+
+II.Upload a sketch on the new atmega328 with bootloader using the arduino uno as the programmer.
+
+1. Uploaded the ArduinoISP sketch from the arduino ide on the arduino uno board.
+
+2. I modified the avrdude.conf file as described here in this instructable.
+( replaced the atmega328p signature "0x1e 0x95 0x0F" with atmega328 signature "0x1e 0x95 0x14")
+
+3. Chose the serial port, Programmer (Tools -> Programmer -> Arduino As ISP) and Board (Tools -> Board -> Lily Pad arduino w/ ATmega328)
+
+4. Opened the Led blink sketch from File -> Examples -> basic -> blink and uploaded the sketch (File -> Upload using programmer). This I think is crucial, since the upload button on the IDE uploads the sketch to the arduino uno board and not to the breadboard.
+
+5. Edited the avrdude.conf file to its original form.
+
+It works.
